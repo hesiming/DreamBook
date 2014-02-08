@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/tab_navigation_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" />
+
+    <!-- 导航条 -->
+
+    <TextView
+        android:id="@+id/tab_cursor_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="3dp"
+        android:layout_gravity="bottom"
+        android:background="@color/color_ec6b56" />
+
+</FrameLayout>

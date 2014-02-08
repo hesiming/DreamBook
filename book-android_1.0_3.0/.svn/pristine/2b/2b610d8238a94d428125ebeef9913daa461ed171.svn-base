@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/book_cell_width"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/book_image_layout"
+        android:layout_width="@dimen/book_cell_width"
+        android:layout_height="@dimen/book_image_height"
+        android:layout_marginTop="10dp"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/book_bg_imageView"
+            android:layout_width="@dimen/book_cell_width"
+            android:layout_height="@dimen/book_image_height"
+            android:gravity="center"
+            android:padding="2dp"
+            android:src="@drawable/book_bg" />
+
+        <ImageView
+            android:id="@+id/book_imageView"
+            android:layout_width="@dimen/book_cell_width"
+            android:layout_height="@dimen/book_image_height"
+            android:gravity="center"
+            android:padding="3dp" />
+
+        <RelativeLayout
+            android:id="@+id/translucent_image_layout"
+            android:layout_width="@dimen/book_cell_width"
+            android:layout_height="@dimen/book_image_height"
+            android:gravity="center"
+            android:padding="2dp"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/translucent_book_imageView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/translucent_book_bg" />
+
+            <ImageView
+                android:id="@+id/sj_book_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/sj" />
+
+            <cn.retech.custom_control.CircleProgressBar
+                android:id="@+id/circle_progressBar"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="3dp"
+                android:layout_marginRight="3dp" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/book_price_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/book_cell_width"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/book_image_layout"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/bookname_textView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:maxEms="8"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/book_name_text_size" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/author_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:maxLines="1"
+                android:text="管理者"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/book_size_text_size"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/booksize_textView"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:maxLines="1"
+                android:text="下载 100.00%"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/book_size_text_size"
+                android:visibility="visible" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="timer" type="id"/>
+    <item name="isMove" type="id"/>
+    <item name="bg" type="id"/>
+    <item name="window_X" type="id"/> 
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!-- 下拉刷新控件 -->
+
+    <cn.retech.custom_control.PullDownAndUpView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none" >
+
+        <cn.retech.custom_control.MyGridView
+            android:id="@+id/book_list_gridView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="top"
+            android:paddingBottom="25dp" />
+    </cn.retech.custom_control.PullDownAndUpView>
+
+    <!-- 网络加载等待提示框 -->
+
+    <RelativeLayout
+        android:id="@+id/net_requestting_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible" >
+
+        <ProgressBar
+            android:id="@+id/net_requestting_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/net_requestting_progressBar"
+            android:gravity="center"
+            android:text="网络请求中..."
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+</FrameLayout>

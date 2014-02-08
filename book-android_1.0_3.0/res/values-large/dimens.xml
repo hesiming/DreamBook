@@ -1,0 +1,26 @@
+<resources>
+
+    <!--
+         Customize dimensions originally defined in res/values/dimens.xml (such as
+         screen margins) for sw600dp devices (e.g. 7" tablets) here.
+         自定义的屏幕大小，比如7寸屏幕
+    -->
+    <dimen name="book_name_text_size">17sp</dimen>
+    <dimen name="book_author_text_size">15sp</dimen>
+    <dimen name="book_size_text_size">14sp</dimen>
+    <dimen name="book_cell_width">140dp</dimen>
+    <dimen name="book_cell_height">240dp</dimen>
+    <dimen name="book_image_height">180dp</dimen>
+    <dimen name="book_folder_width">140dp</dimen>
+    <dimen name="book_folder_height">235dp</dimen>
+    <dimen name="gridView_horizontalSpacing">40dp</dimen>
+    <!-- 开机动画的参数设置 -->
+    <dimen name="welcome_layout_height">900dp</dimen>
+    <dimen name="welcome_image_width">1000dp</dimen>
+    <dimen name="logo_image_marginBottom">30dp</dimen>
+    <dimen name="logo_image_marginRight">50dp</dimen>
+    <!-- page_title_layout中的参数设置 -->
+    <dimen name="title_layout_back_Button_textSize">22sp</dimen>
+    <dimen name="title_layout_title_TextView_textSize">24sp</dimen>
+
+</resources>

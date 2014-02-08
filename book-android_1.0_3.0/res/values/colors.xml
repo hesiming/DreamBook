@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="color_ec6b56">#ec6b56</color>
+    <color name="color_474747">#474747</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#55421c</color>
+    <color name="book_shelf_button_click">#ffff9989</color>
+
+</resources>

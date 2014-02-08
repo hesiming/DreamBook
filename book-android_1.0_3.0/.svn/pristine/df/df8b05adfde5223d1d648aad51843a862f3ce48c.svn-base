@@ -1,0 +1,188 @@
+package cn.retech.activity;
+
+import java.util.List;
+
+import android.app.Activity;
+import android.content.res.Configuration;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.RelativeLayout;
+import cn.retech.adapter.BookGridViewAdapter;
+import cn.retech.custom_control.MyGridView;
+import cn.retech.domainbean_model.book.Book;
+import cn.retech.domainbean_model.book.BookList;
+import cn.retech.domainbean_model.booklist_in_bookstores.BookInfo;
+import cn.retech.domainbean_model.booklist_in_bookstores.BookListInBookstoresNetRequestBean;
+import cn.retech.domainbean_model.booklist_in_bookstores.BookListInBookstoresNetRespondBean;
+import cn.retech.domainbean_model.login.LogonNetRespondBean;
+import cn.retech.global_data_cache.GlobalDataCacheForMemorySingleton;
+import cn.retech.my_domainbean_engine.domainbean_network_engine_singleton.DomainBeanNetworkEngineSingleton;
+import cn.retech.my_domainbean_engine.domainbean_network_engine_singleton.DomainBeanNetworkEngineSingleton.NetRequestIndex;
+import cn.retech.my_domainbean_engine.domainbean_network_engine_singleton.IDomainBeanAsyncNetRespondListener;
+import cn.retech.my_domainbean_engine.net_error_handle.NetErrorBean;
+import cn.retech.toolutils.DebugLog;
+
+public class BookStoreChannelFragment extends Fragment {
+	private final String TAG = this.getClass().getSimpleName();
+
+	public static interface OnHandlerListener {
+		public void onBookClicked(Book book);
+	}
+
+	private OnHandlerListener onHandlerListener;
+
+	public void setOnHandlerListener(OnHandlerListener onHandlerListener) {
+		this.onHandlerListener = onHandlerListener;
+	}
+
+	private final NetRequestIndex netRequestIndexForBookListInBookstores = new NetRequestIndex();
+	private BookGridViewAdapter bookStoreAdapter = new BookGridViewAdapter(BookGridViewAdapter.CellTypeEnum.BookStore);
+	private String identifier;
+	private MyGridView gridView;
+	// 书城图书列表(完成本地图书列表和从服务器新获取的图书列表进行了数据同步)
+	private BookList bookList;
+
+	// 网络加载等待提示框
+	private RelativeLayout progressDialog;
+
+	private LogonNetRespondBean bindAccount;
+
+	public BookStoreChannelFragment() {
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Bundle bundle = getArguments();
+		identifier = bundle.getString("identifier");
+		bindAccount = (LogonNetRespondBean) bundle.getSerializable("bindAccount");
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+
+		((MyGridView) getView().findViewById(R.id.book_list_gridView)).updateData();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		DebugLog.i(TAG, "onCreate");
+
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		DebugLog.i(TAG, "onCreateView");
+		return inflater.inflate(R.layout.fragment_book_list, container, false);
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+	}
+
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
+		progressDialog = (RelativeLayout) getView().findViewById(R.id.net_requestting_layout);
+
+		gridView = (MyGridView) getView().findViewById(R.id.book_list_gridView);
+		gridView.setAdapter(bookStoreAdapter);
+		gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				final List<Book> books = bookList.getCloneBookList();
+				final Book book = books.get(position);
+				onHandlerListener.onBookClicked(book);
+			}
+		});
+
+		requestBookList();
+	}
+
+	private void requestBookList() {
+		requestBookListByCategoryID(identifier, new DomainBeanNetworkEngineSingleton.OnNetRequestResultListener() {
+
+			@Override
+			public void onNetRequestCompleted() {
+				progressDialog.setVisibility(View.INVISIBLE);
+
+			}
+
+			@Override
+			public void onNetRequestAttached() {
+				progressDialog.setVisibility(View.VISIBLE);
+
+			}
+		});
+	}
+
+	/**
+	 * 刷新
+	 */
+	public void refresh() {
+		requestBookList();
+	}
+
+	private void requestBookListByCategoryID(final String categoryID, final DomainBeanNetworkEngineSingleton.OnNetRequestResultListener onNetRequestCompletedListener) {
+		if (!netRequestIndexForBookListInBookstores.idle()) {
+			onNetRequestCompletedListener.onNetRequestAttached();
+			return;
+		}
+
+		BookListInBookstoresNetRequestBean netRequestBean = new BookListInBookstoresNetRequestBean();
+		netRequestBean.setCategory_id(categoryID);
+		DomainBeanNetworkEngineSingleton.getInstance.requestDomainProtocol(netRequestIndexForBookListInBookstores, netRequestBean, new IDomainBeanAsyncNetRespondListener() {
+
+			@Override
+			public void onFailure(NetErrorBean error) {
+				DebugLog.e(TAG, error.getErrorMessage());
+
+				onNetRequestCompletedListener.onNetRequestCompleted();
+			}
+
+			@Override
+			public void onSuccess(Object respondDomainBean) {
+				if (bookList != null) {
+					bookList.deleteObservers();
+				}
+
+				bookList = new BookList();
+				BookListInBookstoresNetRespondBean bookListInBookstoresNetRespondBean = (BookListInBookstoresNetRespondBean) respondDomainBean;
+				// 1，转型从网络获取的书籍列表
+				// 2，将网络获取的书籍列表与本地书籍列表比对
+				// 3，如果相同则从本地书籍列表中获取数据，加入到localbook中
+				// 4，如果不同则将网络返回的书籍加入到localBook中
+				// 5，刷新数据
+				BookList localBookListFromLocal = GlobalDataCacheForMemorySingleton.getInstance.getLocalBookList();// 本地书籍列表
+				// java foreach 只会取一次迭代结合
+				for (BookInfo bookInfo : bookListInBookstoresNetRespondBean.getBookInfoList()) {
+					Book newBook = localBookListFromLocal.bookByContentID(bookInfo.getContent_id());
+					if (newBook == null) {
+						// 本地书籍列表不存在当前书籍
+						newBook = new Book(bookInfo);
+					} else {
+						newBook.setInfo(bookInfo);
+					}
+					newBook.setBindAccount(bindAccount);
+					bookList.addBook(newBook);
+				}
+
+				bookStoreAdapter.changeDataSource(bookList.getCloneBookList());
+
+				onNetRequestCompletedListener.onNetRequestCompleted();
+			}
+		});
+
+		if (!netRequestIndexForBookListInBookstores.idle()) {
+			onNetRequestCompletedListener.onNetRequestAttached();
+		}
+	}
+}

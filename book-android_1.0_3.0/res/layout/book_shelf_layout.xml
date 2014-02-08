@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <!-- title bar -->
+
+    <RelativeLayout
+        android:id="@+id/titlebar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/shape_page_title_background" >
+
+        <!-- 书院 -->
+
+        <TextView
+            android:id="@+id/public_bookstore_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:gravity="center|left"
+            android:text="@string/public_bookstore"
+            android:textColor="@drawable/book_shelf_selector_botton"
+            android:textSize="18sp" />
+
+        <!-- 我的书架 -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/my_bookshelf"
+            android:textColor="@android:color/white"
+            android:textSize="22sp" />
+
+        <!-- 企业 -->
+
+        <TextView
+            android:id="@+id/private_bookstore_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center|right"
+            android:text="@string/private_bookstore"
+            android:textColor="@drawable/book_shelf_selector_botton"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <!-- toolsbar -->
+
+    <RelativeLayout
+        android:id="@+id/toolsbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.85"
+        android:background="#ef6b5c">
+
+        <TextView
+            android:id="@+id/quite_login_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
+            android:text="@string/quite_login"
+            android:textColor="@drawable/book_shelf_selector_botton"
+            android:textSize="18sp" />
+    </RelativeLayout>
+    <!-- 底部退出 -->
+
+
+    <!-- 中间GridView和搜索控件begin -->
+
+    <FrameLayout
+        android:id="@+id/content_parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/toolsbar_layout"
+        android:layout_below="@id/titlebar_layout" >
+
+        <!-- 书架布局, 包括搜索视图+网格视图 -->
+
+        <ScrollView
+            android:id="@+id/book_shelf_scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_horizontal"
+                android:orientation="vertical" >
+
+                <!-- 搜索按钮 -->
+
+                <Button
+                    android:id="@+id/search_button"
+                    android:layout_width="270dp"
+                    android:layout_height="35dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/selector_search_button" />
+                <!-- 网格视图 -->
+
+                <cn.retech.custom_control.MyGridView
+                    android:id="@+id/bookshelf_gridLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/search_button"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center" />
+            </RelativeLayout>
+        </ScrollView>
+
+        <LinearLayout
+            android:id="@+id/search_view_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+        </LinearLayout>
+    </FrameLayout>
+    <!-- 中间GridView和搜索控件end -->
+
+</RelativeLayout>

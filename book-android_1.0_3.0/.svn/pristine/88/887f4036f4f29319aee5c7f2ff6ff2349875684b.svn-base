@@ -1,0 +1,28 @@
+<resources>
+
+    <!--
+    Default screen margins, per the Android Design guidelines. 
+    默认的屏幕大小在这里定义
+    -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="book_name_text_size">13sp</dimen>
+    <dimen name="book_author_text_size">12sp</dimen>
+    <dimen name="book_size_text_size">11sp</dimen>
+    <dimen name="book_cell_width">95dp</dimen>
+    <dimen name="book_cell_height">170dp</dimen>
+    <dimen name="book_image_height">120dp</dimen>
+    <dimen name="book_folder_width">95dp</dimen>
+    <dimen name="book_folder_height">160dp</dimen>
+    <dimen name="gridView_horizontalSpacing">20dp</dimen>
+    <!-- 开机动画的参数设置 -->
+    <dimen name="welcome_layout_height">530dp</dimen>
+    <dimen name="welcome_image_width">500dp</dimen>
+    <dimen name="logo_image_marginBottom">20dp</dimen>
+    <dimen name="logo_image_marginRight">10dp</dimen>
+    <!-- page_title_layout中的参数设置 -->
+    <dimen name="title_layout_back_Button_textSize">18sp</dimen>
+    <dimen name="title_layout_title_TextView_textSize">20sp</dimen>
+
+     <dimen name="default_gap">16dip</dimen>
+</resources>
